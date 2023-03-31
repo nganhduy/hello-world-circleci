@@ -25,6 +25,15 @@ jobs:
       - run: 
           name: "Say world"
           command: "echo My name is Fury!"
+  say-env-variable:
+    docker: 
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: 
+          name: "Say environment variable"
+          command: echo ${FURY}
+      
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -35,4 +44,7 @@ workflows:
       - say-world:
           requires: 
             - say-hello
+  say-env-variable-workflow:
+    jobs: 
+      - say-env-variable
 
