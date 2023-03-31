@@ -42,8 +42,8 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
+      - say-env-variable
       - say-hello
       - say-world:
           requires: 
             - say-hello
-      - say-env-variable
