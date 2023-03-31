@@ -35,7 +35,28 @@ jobs:
           command: echo ${FURY} ${CLOUD} 
           environment:
             CLOUD: white
-      
+  save_hello_fury_output:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: 
+          name: "Output file for hello fury"
+          command: mkdir -p workspace && echo "This is an example output" > workspace/output.txt      
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - output.txt
+  print_output_file: 
+    docker:
+      - image: circleci/node:13.8.0
+    steps: 
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - run: 
+          name: "Print output file"
+          command: cat output.txt
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -47,3 +68,9 @@ workflows:
       - say-world:
           requires: 
             - say-hello
+  store-file-workflow:
+    jobs:
+      - save_hello_fury_output
+      - print_output_file: 
+          requires: 
+            - save_hello_fury_output
