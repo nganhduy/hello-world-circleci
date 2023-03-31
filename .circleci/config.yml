@@ -31,8 +31,10 @@ jobs:
     steps:
       - checkout
       - run: 
-          name: "Say environment variable"
-          command: echo ${FURY}
+          name: "This is an example of environment variable"
+          command: echo ${FURY} ${CLOUD} 
+          environment:
+            CLOUD: white
       
 
 # Orchestrate jobs using workflows
@@ -44,7 +46,4 @@ workflows:
       - say-world:
           requires: 
             - say-hello
-  say-env-variable-workflow:
-    jobs: 
       - say-env-variable
-
