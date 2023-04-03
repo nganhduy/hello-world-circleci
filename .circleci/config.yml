@@ -68,7 +68,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - print_pipeline_id
-  fail_jobs:
+  fail_job:
     docker: 
       - image: circleci/node:13.8.0
     steps: 
@@ -98,4 +98,4 @@ workflows:
       - call_commands
   fail-workflow:
     jobs: 
-      - fail_jobs
+      - fail_job
